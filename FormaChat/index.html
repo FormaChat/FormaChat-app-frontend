@@ -2,12 +2,164 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>formachat</title>
+    <title>Formachat - Going Beta</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        padding: 20px;
+      }
+
+      #app {
+        text-align: center;
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: #2d3748;
+        margin-bottom: 2rem;
+        font-weight: 700;
+        line-height: 1.2;
+      }
+
+      .countdown {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+      }
+
+      .time-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 80px;
+      }
+
+      .time-value {
+        font-size: 3rem;
+        font-weight: 700;
+        color: #667eea;
+        line-height: 1;
+      }
+
+      .time-label {
+        font-size: 0.875rem;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0.5rem;
+        font-weight: 600;
+      }
+
+      @media (max-width: 640px) {
+        #app {
+          padding: 2rem 1.5rem;
+        }
+
+        h1 {
+          font-size: 1.75rem;
+        }
+
+        .countdown {
+          gap: 1rem;
+        }
+
+        .time-unit {
+          min-width: 60px;
+        }
+
+        .time-value {
+          font-size: 2rem;
+        }
+
+        .time-label {
+          font-size: 0.75rem;
+        }
+      }
+
+      @media (max-width: 400px) {
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        .time-value {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div id="app">
+      <h1>Formachat is going Beta</h1>
+      
+      <div class="countdown">
+        <div class="time-unit">
+          <div class="time-value" id="days">14</div>
+          <div class="time-label">Days</div>
+        </div>
+        <div class="time-unit">
+          <div class="time-value" id="hours">00</div>
+          <div class="time-label">Hours</div>
+        </div>
+        <div class="time-unit">
+          <div class="time-value" id="minutes">00</div>
+          <div class="time-label">Minutes</div>
+        </div>
+        <div class="time-unit">
+          <div class="time-value" id="seconds">00</div>
+          <div class="time-label">Seconds</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // SET YOUR ACTUAL BETA LAUNCH DATE AND TIME HERE
+      // Format: 'YYYY-MM-DD HH:MM:SS' (24-hour format)
+      // Example: December 14, 2025 at 9:00 AM would be '2025-12-14 09:00:00'
+      const launchDate = new Date('2025-12-14 09:00:00');
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = launchDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById('days').textContent = days.toString().padStart(2, '0');
+        document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+        document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+        document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+
+        if (distance < 0) {
+          clearInterval(countdownTimer);
+          document.querySelector('h1').textContent = 'Formachat is now LIVE!';
+          document.querySelector('.countdown').innerHTML = '<div style="font-size: 2rem; color: #667eea;">🎉</div>';
+        }
+      }
+
+      // Update countdown immediately and then every second
+      updateCountdown();
+      const countdownTimer = setInterval(updateCountdown, 1000);
+    </script>
   </body>
 </html>
